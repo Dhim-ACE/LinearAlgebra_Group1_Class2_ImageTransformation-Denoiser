@@ -1,5 +1,17 @@
 import streamlit as st
-from PIL import Image, ImageTransform
+from PIL import Image, ImageFilter, ImageTransform
+
+def denoise_image_pillow(image):
+  """
+  Applies Median Filter for Denoising using Pillow.
+
+  Args:
+      image: Input image (PIL format).
+
+  Returns:
+      Denoised image (PIL format).
+  """
+  return image.filter(ImageFilter.MedianFilter(size=3))
 
 def translate_image(image, x_offset, y_offset):
   """
@@ -44,6 +56,18 @@ def skew_image(image, shear_x, shear_y):
   """
   return image.transform(image.size, Image.AFFINE, (1, shear_x, 0, shear_y, 1, 0))
 
+def denoising_page():
+  st.title("Image Denoising with Pillow")
+
+  uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "png", "jpeg"])
+
+  if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+
+    denoised_image = denoise_image_pillow(image)
+
+    st.image([image, denoised_image], caption=['Original Image', 'Denoised Image'], use_container_width=True)
+
 def transformation_page():
   st.title("Image Transformation (Translate, Scale, Skew)")
 
@@ -67,23 +91,3 @@ def transformation_page():
 
     # Display original and transformed images
     st.image([image, transformed_image], caption=['Original Image', 'Transformed Image'], use_container_width=True)
-
-def main_page():
-    # ... (existing code for main page)
-
-def denoising_page():
-    # ... (existing code for denoising page)
-
-def about_page():
-    # ... (existing code for about page)
-
-if __name__ == "__main__":
-  page = st.sidebar.selectbox("Select a Page", ["1. Linear Algebra Project", "2. Image Transformation: Denoiser", "3. About Image Transformation", "4. Image Transformation (Translate, Scale, Skew)"])
-
-  if page == "1. Linear Algebra Project":
-    main_page()
-  elif page == "2. Image Transformation: Denoiser":
-    denoising_page()
-  elif page == "3. About Image Transformation":
-    about_page()
-  elif page ==
