@@ -22,7 +22,7 @@ def main_page():
     with col1:
         try:
             # Coba untuk menggunakan jalur relatif untuk gambar
-            image_path = "c:\MainStorageVault\Downloads\LinearAlgebra_Group1_Class2\PresidentUniversityLogo.png"  # Gambar ini harus ada di dalam folder 'images'
+            image_path = "PresidentUniversityLogo.png"  # Gambar ini harus ada di dalam folder 'images'
             st.image(image_path, caption="President University Logo", use_container_width=True)
         except Exception as e:
             st.error(f"Error loading image: {e}")
@@ -55,7 +55,7 @@ def about_page():
         # Load the static DenoiserEffect.png from a file path
         try:
             # Gambar statis DenoiserEffect.png
-            image_path = "c:\MainStorageVault\Downloads\LinearAlgebra_Group1_Class2\DenoiserEffect.png"  # Pastikan gambar ini berada dalam folder yang sama dengan file kode
+            image_path = "DenoiserEffect.png"  # Pastikan gambar ini berada dalam folder yang sama dengan file kode
             st.image(image_path, caption="Denoiser Effect", use_container_width=True)
         except Exception as e:
             st.error(f"Error loading image: {e}")
