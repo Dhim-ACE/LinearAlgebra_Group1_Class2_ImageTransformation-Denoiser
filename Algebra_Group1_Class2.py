@@ -38,9 +38,13 @@ def scale_image(image, scale_factor):
     Returns:
         Scaled image (PIL format).
     """
-    new_width = int(image.width * scale_factor)
-    new_height = int(image.height * scale_factor)
-    return image.resize((new_width, new_height), resample=Image.BILINEAR) 
+    try:
+        new_width = int(image.width * scale_factor)
+        new_height = int(image.height * scale_factor)
+        return image.resize((new_width, new_height), resample=Image.BILINEAR) 
+    except Exception as e:
+        print(f"Error during image scaling: {e}")
+        return None  # Handle the error by returning None
 
 def skew_image(image, shear_x, shear_y):
     """
@@ -86,11 +90,20 @@ def transformation_page():
         # Apply transformations based on user input
         transformed_image = image.copy()  # Avoid modifying the original image
         transformed_image = translate_image(transformed_image, x_offset, y_offset)
-        transformed_image = scale_image(transformed_image, scale_factor)
-        transformed_image = skew_image(transformed_image, shear_x, shear_y)
+
+        # Check if transformed_image is still valid after translation
+        if transformed_image is not None: 
+            print("Transformed image before scaling:", transformed_image) 
+            transformed_image = scale_image(transformed_image, scale_factor) 
+
+        if transformed_image is not None: 
+            transformed_image = skew_image(transformed_image, shear_x, shear_y)
 
         # Display original and transformed images
-        st.image([image, transformed_image], caption=['Original Image', 'Transformed Image'], use_container_width=True)
+        if transformed_image is not None:
+            st.image([image, transformed_image], caption=['Original Image', 'Transformed Image'], use_container_width=True)
+        else:
+            st.warning("Image transformation failed. Please check the input image or parameters.")
 
 def main_page():
     st.title("Linear Algebra Group 1 Class 2 [2023]")
