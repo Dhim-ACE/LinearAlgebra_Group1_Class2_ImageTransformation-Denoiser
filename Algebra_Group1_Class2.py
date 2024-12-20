@@ -93,7 +93,7 @@ def transformation_page():
     st.image([image, transformed_image], caption=['Original Image', 'Transformed Image'], use_container_width=True)
 
 def main_page():
-  st.title("Linear Algebra Group 2 Class 2 [2023]")
+  st.title("Linear Algebra Group 1 Class 2 [2023]")
 
   col1, col2 = st.columns(2)
 
