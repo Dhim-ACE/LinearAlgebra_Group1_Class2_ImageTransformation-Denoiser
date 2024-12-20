@@ -1,5 +1,5 @@
 import streamlit as st
-from PIL import Image, ImageFilter, ImageTransform
+from PIL import Image, ImageFilter
 
 def denoise_image_pillow(image):
     """
@@ -40,7 +40,7 @@ def scale_image(image, scale_factor):
     """
     new_width = int(image.width * scale_factor)
     new_height = int(image.height * scale_factor)
-    return image.resize((new_width, new_height), Image.ANTIALIAS)
+    return image.resize((new_width, new_height), resample=Image.BILINEAR) 
 
 def skew_image(image, shear_x, shear_y):
     """
@@ -131,7 +131,7 @@ def about_page():
         st.write("Image denoising is a technique used to reduce noise in images. Noise can be caused by various factors, such as sensor noise, transmission errors, or poor lighting conditions.")
         st.write("The Median Filter technique is one of the basic methods for image denoising. It works by applying a filter that preserves edges while reducing noise, making it suitable for basic denoising operations.")
 
-if __name__ == "__main__":  # Corrected line
+if __name__ == "__main__":
     page = st.sidebar.selectbox("Select a Page", ["1. Linear Algebra Project", "2. Image Transformation: Denoiser", "3. About Image Transformation", "4. Image Transformation (Translate, Scale, Skew)"])
 
     if page == "1. Linear Algebra Project":
